@@ -17,7 +17,7 @@ export async function apiRequest(endpoint, options = {}) {
     headers["Content-Type"] = "application/json";
   }
 
-  if (token && !headers["Authorization"]) {
+  if (token && !headers["Authorization"] && !endpoint.includes("/auth/login") && !endpoint.includes("/auth/register")) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 

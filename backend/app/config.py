@@ -3,9 +3,12 @@ from typing import Optional
 from pydantic_settings import BaseSettings
 from pydantic import Field
 
+_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_DEFAULT_DB_PATH = os.path.join(_BASE_DIR, "meeting_clarifier.db").replace("\\", "/")
+
 class Settings(BaseSettings):
     APP_NAME: str = "MeetFlow AI"
-    DATABASE_URL: str = Field(default="sqlite:///./meeting_clarifier.db")
+    DATABASE_URL: str = Field(default=f"sqlite:///{_DEFAULT_DB_PATH}")
     JWT_SECRET: str = Field(default="super-secret-jwt-key-for-meeting-action-clarifier-2026")
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
