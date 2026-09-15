@@ -1,4 +1,8 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD
+    ? "https://meetflow-ai-backend-vjh2.onrender.com"
+    : "http://localhost:8000");
 
 /**
  * Universal fetch wrapper for API communication.
@@ -55,7 +59,7 @@ export async function apiRequest(endpoint, options = {}) {
     return data;
   } catch (error) {
     if (error.name === "TypeError" && error.message.includes("fetch")) {
-      throw new Error("Unable to connect to the server. Please ensure the backend is running at http://localhost:8000.");
+      throw new Error(`Unable to connect to the server. Please ensure the backend is running at ${API_BASE_URL}.`);
     }
     throw error;
   }
